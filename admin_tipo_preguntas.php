@@ -12,8 +12,8 @@
     
     $id = $_GET['id'];
     if($id) {
-        $tipo_preguntas = "SELECT * FROM tipo_preguntas WHERE id = '$id'";
-        $modificar = $con->query($tipo_preguntas);
+        $tipo_respuestas = "SELECT * FROM tipo_respuestas WHERE id = '$id'";
+        $modificar = $con->query($tipo_respuestas);
         $datos = $modificar->fetch_array();
     }
 ?>
@@ -194,7 +194,7 @@
                                                         </tfoot>
                                                         <tbody>
                                                             <?php
-                                                            while ($dataSelect = mysqli_fetch_array($datacat_tipo_preguntaSelect)) { ?>
+                                                            while ($dataSelect = mysqli_fetch_array($datacat_tipo_respuestaSelect)) { ?>
                                                             <?php $tipo_id = $dataSelect["id"]; ?>
                                                                 <tr>
                                                                     <td><?php echo $dataSelect["encuesta_titulo"]; ?></td>
