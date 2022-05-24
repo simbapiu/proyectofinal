@@ -45,21 +45,21 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="admin_catalogo_encuesta.php">
+                <a class="nav-link" href="reportes_graficas.php">
                     <i class="fas fa-fw fa-list"></i>
                     <span>Gráficas</span></a>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="admin_catalogo_preg.php">
+                <a class="nav-link" href="reportes_tablas.php">
                     <i class="fas fa-fw fa-list-alt"></i>
                     <span>Tablas</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
-                <a class="nav-link" href="admin_respuestas.php">
+                <a class="nav-link" href="reportes_variables.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Variables</span></a>
             </li>

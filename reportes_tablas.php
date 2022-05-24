@@ -45,21 +45,21 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="admin_catalogo_encuesta.php">
+                <a class="nav-link" href="reportes_graficas.php">
                     <i class="fas fa-fw fa-list"></i>
                     <span>Gráficas</span></a>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item active">
-                <a class="nav-link" href="admin_catalogo_preg.php">
+                <a class="nav-link" href="reportes_tablas.php">
                     <i class="fas fa-fw fa-list-alt"></i>
                     <span>Tablas</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="admin_respuestas.php">
+                <a class="nav-link" href="reportes_variables.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Variables</span></a>
             </li>
@@ -84,7 +84,65 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    
+                    <div class="container">
+                        <div class="card o-hidden border-0 shadow-lg my-2">
+                            <div class="card-body p-5">
+                                <div class="col">
+                                    <div class="p-5">
+                                        <!-- Page Heading -->
+                                        <h1 class="h3 mb-2 text-gray-800">Listado de respuestas de las entrevistas</h1>
+                                        <p class="mb-4">En la siguiente tabla se lista las respuestas de las entrevistas.</p>
+
+                                        <!-- DataTales Example -->
+                                        <div class="card shadow mb-4">
+                                            <div class="card-header py-3">
+                                                <h6 class="m-0 font-weight-bold text-primary">Respuestas entrevistas</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Entrevista</th>
+                                                                <th>Pregunta</th>
+                                                                <th>Respuesta</th>
+                                                                <th>Acciones</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Nombre</th>
+                                                                <th>Periodo</th>
+                                                                <th>Descripción</th>
+                                                                <th>Acciones</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                        <tbody>
+                                                            <?php
+                                                                while ($dataSelect = mysqli_fetch_array($datacat_encuestaSelect)) { ?>
+                                                            <?php $encuesta_id = $dataSelect["id"]; ?>
+                                                                <tr>
+                                                                    <td><?php echo $dataSelect["titulo"]; ?></td>
+                                                                    <td><?php echo $dataSelect["anio"]; ?></td>
+                                                                    <td><?php echo $dataSelect["descripcion"]; ?></td>
+                                                                    <td class="btn-actions-container">
+                                                                        <div class="btn-actions">
+                                                                            <a href="?id=<?php echo $encuesta_id; ?>"><i class="fas fa-pen fa-sm btn-warning2"></i></a>
+                                                                            <a href="scripts/eliminar_encuesta.php?id=<?php echo $encuesta_id; ?>"><i class="fas fa-trash fa-sm btn-danger2"></i></a>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
             </div>

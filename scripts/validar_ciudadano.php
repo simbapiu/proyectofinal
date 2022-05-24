@@ -7,7 +7,6 @@
         $numero_folio = $_POST['numero_folio'];
         $periodo = $_POST['periodo'];
         $folio = $numero_folio . "" . $periodo;
-        echo $folio;
 
         if ($captcha_cookie == sha1($captcha_user)) {
             include ('../con_db.php');
@@ -16,16 +15,18 @@
             $filaResultado = $resultado->fetch_array();
             session_start();
             $_SESSION['is_valid'] = true;
-            if ($filaResultado[1] == $folio) {
+            if (($filaResultado[1] == $folio) && ($filaResultado[2] == $facilitador) && ($filaResultado[4] == $etapa) && ($filaResultado[5] == $periodo)) {
                 $estatus = $filaResultado[6];
-                $_SESSION['estatus'] = $estatus;
-                header("location: ../entrevista.php?folio=$folio");
+                if($estatus == 'publicado') {
+                    header("location: ../entrevista.php?folio=$folio");
+                } else {
+                    header("location: ../index.php");
+                }
             }
-            else {
+            elseif ($filaResultado == null) {
                 $sql2 = "SELECT oficina FROM encuestas WHERE anio = '$periodo'";
                 $resultado2 = $con->query($sql2);
                 $filaEncuesta = $resultado2->fetch_array();
-                echo "pasó2";
                 $guardar_resultado = "INSERT INTO `resultados`
                 (`folio`, `facilitador`, `oficina`, `etapa`, `periodo`, `estatus`) VALUES (
                     '$folio',
@@ -37,7 +38,6 @@
                 $sqlGuardar = mysqli_query($con, $guardar_resultado);
                 echo $sqlGuardar ? 'Ok' : 'Error: '.mysqli_error($conn);
                 if ($sqlGuardar) {
-                    echo "paso4";
                     $_SESSION['estatus'] = 'publicado';
                     $_SESSION['etapa'] = $etapa;
                     $_SESSION['periodo'] = $periodo;
@@ -47,6 +47,9 @@
                     echo "Error: " . $guardar_resultado . "<br>" . mysqli_error($con);
                 }
                 mysqli_close($con);
+            }
+            else {
+                header("location: ../index.php");
             }
         } else{
             header("location: ../index.php");

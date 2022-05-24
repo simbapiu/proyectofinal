@@ -118,65 +118,100 @@
                                         </div>
                                         <br>
                                         <form class="user" action="scripts/entrevista_guardar.php" method="POST">
+                                            <input type="hidden" name="folio" value="<?php echo $folio; ?>">
                                             <?php 
                                                 $sqlPreguntas = ("SELECT * FROM preguntas WHERE encuesta_titulo = '$encuesta_titulo' ORDER BY titulo DESC");
                                                 $dataPreguntas  = mysqli_query($con, $sqlPreguntas);
-                                                while ($datosPreg = mysqli_fetch_array($dataPreguntas)) { ?>
+                                                while ($datosPreg = mysqli_fetch_array($dataPreguntas)) { 
+                                                    $respuesta_entrevista = "SELECT * FROM respuestas_entrevista WHERE entrevista_folio = '".$folio."' AND pregunta_id = '".$datosPreg['id']."'";
+                                                    $resultadoConsulta = $con->query($respuesta_entrevista);
+                                                    $datos_respuesta = $resultadoConsulta->fetch_array();
+                                                    ?>
                                                     <div class="card">
                                                         <div class="card-header">
                                                             <?php echo $datosPreg['titulo']; ?>
                                                         </div>
                                                         <div class="card-body">
                                                             <center>
-                                                                <form>
-                                                                    <input type="hidden" id="token" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
-                                                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                                                        <input type="radio" value="0" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp1-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off">
-                                                                        <label class="btn btn-outline-pj" for="resp1-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/0.png" width="90px" height="90px"></label>
+                                                                <input type="hidden" id="token" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>">
+                                                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                                                    <input type="radio" value="0" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp1-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off" required <?php if ($datos_respuesta['valor'] == "0") echo "checked"; ?>>
+                                                                    <label class="btn btn-outline-pj" for="resp1-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/0.png" width="90px" height="90px"></label>
 
-                                                                        <input type="radio" value="1" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp2-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off">
-                                                                        <label class="btn btn-outline-pj" for="resp2-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/1.png" width="90px" height="90px"></label>
+                                                                    <input type="radio" value="1" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp2-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off" <?php if ($datos_respuesta['valor'] == "1") echo "checked"; ?>>
+                                                                    <label class="btn btn-outline-pj" for="resp2-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/1.png" width="90px" height="90px"></label>
 
-                                                                        <input type="radio" value="2" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp3-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off">
-                                                                        <label class="btn btn-outline-pj" for="resp3-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/2.png" width="90px" height="90px"></label>
+                                                                    <input type="radio" value="2" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp3-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off" <?php if ($datos_respuesta['valor'] == "2") echo "checked"; ?>>
+                                                                    <label class="btn btn-outline-pj" for="resp3-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/2.png" width="90px" height="90px"></label>
 
-                                                                        <input type="radio" value="3" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp4-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off">
-                                                                        <label class="btn btn-outline-pj" for="resp4-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/3.png" width="90px" height="90px"></label>
+                                                                    <input type="radio" value="3" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp4-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off" <?php if ($datos_respuesta['valor'] == "3") echo "checked";?>>
+                                                                    <label class="btn btn-outline-pj" for="resp4-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/3.png" width="90px" height="90px"></label>
 
-                                                                        <input type="radio" value="4" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp5-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off">
-                                                                        <label class="btn btn-outline-pj" for="resp5-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/4.png" width="90px" height="90px"></label>
+                                                                    <input type="radio" value="4" class="btn-check" name="btnradio-<?php echo $folio."-".$datosPreg['id']; ?>" id="resp5-<?php echo $folio."-".$datosPreg['id']; ?>" autocomplete="off" <?php if ($datos_respuesta['valor'] == "4") echo "checked"; ?>>
+                                                                    <label class="btn btn-outline-pj" for="resp5-<?php echo $folio."-".$datosPreg['id']; ?>"><img src="imagenes/4.png" width="90px" height="90px"></label>
+                                                                </div>
+                                                                <div style="display:inline-block;">
+                                                                    <div class="opciones-label">
+                                                                        <span id="span-resp1-<?php echo $datosPreg['id']; ?>">
+                                                                            Nada <?php echo $datosPreg['variable']; ?>
+                                                                        </span>
                                                                     </div>
-                                                                    <div style="display:inline-block;">
-                                                                        <div class="opciones-label">
-                                                                            <span>Nada <?php echo $datosPreg['variable']; ?></span>
-                                                                        </div>
-                                                                        <div class="opciones-label">
-                                                                            <span>Poco <?php echo $datosPreg['variable']; ?></span>
-                                                                        </div>
-                                                                        <div class="opciones-label">
-                                                                            <span>Algo <?php echo $datosPreg['variable']; ?></span>
-                                                                        </div>
-                                                                        <div class="opciones-label">
-                                                                            <span><?php echo ucfirst($datosPreg['variable']); ?></span>
-                                                                        </div>
-                                                                        <div class="opciones-label">
-                                                                            <span>Muy <?php echo $datosPreg['variable']; ?></span>
-                                                                        </div>
+                                                                    <div class="opciones-label">
+                                                                        <span id="span-resp2-<?php echo $datosPreg['id']; ?>">
+                                                                            Poco <?php echo $datosPreg['variable']; ?>
+                                                                        </span>
                                                                     </div>
-                                                                </form>
+                                                                    <div class="opciones-label">
+                                                                        <span id="span-resp3-<?php echo $datosPreg['id']; ?>">
+                                                                            Algo <?php echo $datosPreg['variable']; ?>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="opciones-label">
+                                                                        <span id="span-resp4-<?php echo $datosPreg['id']; ?>">
+                                                                            <?php echo ucfirst($datosPreg['variable']); ?>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="opciones-label">
+                                                                        <span id="span-resp5-<?php echo $datosPreg['id']; ?>">
+                                                                            Muy <?php echo $datosPreg['variable']; ?>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
                                                             </center>
                                                         </div>
                                                     </div>
                                                     <br>
                                                 <?php } ?>
+                                            <div class="mb-3">
+                                                <label for="comentarios" class="form-label">Sugerencias o comentarios:</label>
+                                                <?php 
+                                                    $respuesta_entrevista = "SELECT * FROM respuestas_entrevista WHERE entrevista_folio = '".$folio."' AND pregunta_id = 'comentarios'";
+                                                    $resultadoConsulta = $con->query($respuesta_entrevista);
+                                                    $datos_respuesta = $resultadoConsulta->fetch_array();
+                                                    if($datos_respuesta) {
+                                                        $comentarios = $datos_respuesta['respuesta'];
+                                                    }
+                                                    else {
+                                                        $crear_comentarios = "INSERT INTO `respuestas_entrevista` (`entrevista_folio`, `pregunta_id`, `respuesta`, `valor`) VALUES ('$folio', 0, '', 'comentarios')";
+                                                        $comentarios_resultado = $con->query($crear_comentarios);
+                                                        if($comentarios_resultado) {
+                                                            $comentarios = '';
+                                                        } else {
+                                                            echo "Error al guardar: " . $resultado_guardar . "<br>" . mysqli_error($con);
+                                                        }
+                                                    }
+                                                ?>
+                                                <textarea class="form-control" id="comentarios" name="comentarios" rows="3" required><?php echo $comentarios; ?></textarea>
+                                            </div>
                                             <br>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <input type="submit" name="cancelar" class="btn btn-primary btn-user btn-block" value="Guardar y Salir">
+                                                    <input type="submit" name="guardar" class="btn btn-primary btn-user btn-block" value="Guardar y salir">
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <input type="submit" name="<?php echo "finalizar"; ?>" class="btn btn-primary btn-user btn-block" value="Finalizar">
+                                                    <input type="submit" name="finalizar" class="btn btn-primary btn-user btn-block" value="Finalizar">
                                                 </div>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -214,39 +249,20 @@
     <script>
         $(document).ready(function(){
             $('input[type="radio"]').click(function() {
-                let opcion = 0;
-                let id_seleccionado = this.id;
-                let valor_seleccionado = $("#"+id_seleccionado+":checked").val();
-                let pregunta_id = id_seleccionado.split('-').pop();
-                let folio = id_seleccionado.split('-')[1];
-                switch (valor_seleccionado) {
-                    case '0':
-                        opcion = "Nada satisfecho";
-                        break;
-                    case '1':
-                        opcion = "Poco satisfecho";
-                        break;
-                    case '2':
-                        opcion = "Algo atisfecho";
-                        break;
-                    case '3':
-                        opcion = "Satisfecho";
-                        break;
-                    case '4':
-                        opcion = "Muy satisfecho";
-                        break;
-                    default:
-                        break;
-                }
+                let idSeleccionado = this.id;
+                let valorSeleccionado = $("#"+idSeleccionado+":checked").val();
+                let preguntaId = idSeleccionado.split('-').pop();
+                let opcion = document.getElementById("span-"+idSeleccionado.split("-")[0]+"-"+preguntaId);
+                let folio = idSeleccionado.split('-')[1];
                 let _token = $('#token').val();
                 $.ajax({
                     url: 'scripts/opciones_guardar.php',
                     type: 'post',
                     data: {
-                        pregunta_id: pregunta_id,
+                        pregunta_id: preguntaId,
                         folio: folio,
-                        opcion: opcion,
-                        valor_seleccionado: valor_seleccionado,
+                        opcion: opcion.innerText,
+                        valor_seleccionado: valorSeleccionado,
                         _token: _token
                     },
                     success: function (response) {
